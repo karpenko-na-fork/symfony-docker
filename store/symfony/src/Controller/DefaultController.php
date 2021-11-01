@@ -13,12 +13,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 class DefaultController extends AbstractController
 {
     private DocumentManager $documentManager;
-    private SerializerInterface $serializer;
 
-    public function __construct(DocumentManager $documentManager, SerializerInterface $serializer)
+    public function __construct(DocumentManager $documentManager)
     {
         $this->documentManager = $documentManager;
-        $this->serializer = $serializer;
     }
 
     public function index(): Response
@@ -38,7 +36,6 @@ class DefaultController extends AbstractController
     public function all(): Response
     {
         $products = $this->documentManager->getRepository(Product::class)->findAll();
-        $json = $this->serializer->serialize($products, 'json');
-        return $this->json($json);
+        return $this->json($products);
     }
 }
