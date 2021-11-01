@@ -1,0 +1,6 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+all:
+    path: /all
+    controller: App\Controller\DefaultController::all

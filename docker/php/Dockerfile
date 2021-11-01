@@ -9,8 +9,7 @@ RUN apk add --update \
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions \
-    mysqli \
-    pdo_mysql
+    mongodb
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
     ln -s $(composer config --global home) /root/composer
@@ -21,7 +20,7 @@ ADD php.ini /etc/php/cli/conf.d/
 ADD php.ini /usr/local/etc/php
 ADD php-fpm.conf /etc/php/php-fpm.d/
 
-WORKDIR /var/www/symfony
+WORKDIR /var/www
 
 EXPOSE 9000
 
