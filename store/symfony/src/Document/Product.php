@@ -1,61 +1,56 @@
 <?php
-
-declare(strict_types=1);
+// api/src/Document/Product.php
 
 namespace App\Document;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @MongoDB\Document
+ * @ApiResource
+ *
+ * @ODM\Document
  */
 class Product
 {
     /**
-     * @MongoDB\Id
+     * @ODM\Id(strategy="INCREMENT", type="int")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @ODM\Field
      */
-    protected $name;
+    public $name;
 
     /**
-     * @MongoDB\Field(type="float")
+     * @ODM\ReferenceMany(targetDocument=Offer::class, mappedBy="product", cascade={"persist"}, storeAs="id")
      */
-    protected $price;
+    public $offers;
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function __construct()
     {
-        return $this->name;
+        $this->offers = new ArrayCollection();
     }
 
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
+    public function getId(): ?int
     {
-        $this->name = $name;
+        return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPrice()
+    public function addOffer(Offer $offer): void
     {
-        return $this->price;
+        $offer->product = $this;
+        $this->offers->add($offer);
     }
 
-    /**
-     * @param mixed $price
-     */
-    public function setPrice($price): void
+    public function removeOffer(Offer $offer): void
     {
-        $this->price = $price;
+        $offer->product = null;
+        $this->offers->removeElement($offer);
     }
 
+    // ...
 }
