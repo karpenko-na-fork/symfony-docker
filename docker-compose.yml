@@ -7,13 +7,10 @@ services:
     image: mongo
     restart: always
     environment:
+      - MONGO_INITDB_DATABASE=api
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=toor
   store-api:
     build: ./docker/nginx
     ports: ['8050:80']
     volumes: ['./store:/var/www/store:cached']
-  user-api:
-    build: ./docker/nginx
-    ports: ['8051:80']
-    volumes: ['./user:/var/www/user:cached']

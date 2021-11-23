@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ODM\Document
  */
+#[ApiResource(iri: "http://schema.org/Offer")]
 class Offer
 {
     /**

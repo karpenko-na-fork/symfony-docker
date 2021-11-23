@@ -52,5 +52,21 @@ class Product
         $this->offers->removeElement($offer);
     }
 
-    // ...
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+
 }
