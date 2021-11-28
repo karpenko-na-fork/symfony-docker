@@ -8,40 +8,52 @@ For PHP8 use the following branch: https://github.com/coloso/symfony-docker/tree
 ### Prerequisites
 * [Docker](https://www.docker.com/)
 
-### Container
+### Контейнеры
  - [php-fpm](https://hub.docker.com/_/php) 7.4.+
     - [composer](https://getcomposer.org/) 
     - [yarn](https://yarnpkg.com/lang/en/) and [node.js](https://nodejs.org/en/) (if you will use [Encore](https://symfony.com/doc/current/frontend/encore/installation.html) for managing JS and CSS)
  - [nginx](https://hub.docker.com/_/nginx) 1.21.+
  - [mysql](https://hub.docker.com/_/mysql/) 5.7.+
 
-### Installing
+### Установка
 
-run docker and connect to container:
+Запустите сборку Docker-а
+```shell
+# первая сборка
+docker compose up --build
+# пересоздание контейнеров 
+docker compose up --build --force-recreate
 ```
- docker compose up --build
+
+Соединитесь с контейнером PHP
+```shell
+# в Linux
+docker compose exec php sh
+
+# в Windows 
+winpty docker compose exec php sh
 ```
-```
- docker compose exec php sh
-```
-install the latest version of [Symfony](http://symfony.com/doc/current/setup.html) via composer:
-```
-# traditional web application: 
+
+Установите последнюю версию [Symfony](http://symfony.com/doc/current/setup.html) с помощью composer-а:
+```shell
+# стандартное web-приложение: 
 composer create-project symfony/website-skeleton .
-```
-or 
-```
-# microservice, console application or API:
+
+# микросервис, консольное или API-приложение:
 composer create-project symfony/skeleton .
 ```
 
-modify your DATABASE_URL config in .env 
+Т.к. Symfony установится в папку skeleton (или website-skeleton), то переносим все в папку сайта:
+```shell
+mv /var/www/symfony/skeleton/* /var/www/symfony
+mv /var/www/symfony/skeleton/.* /var/www/symfony
+rm -Rf /var/www/symfony/skeleton
+```
+
+Измените DATABASE_URL в файле .env 
 ```
 DATABASE_URL=mysql://root:root@mysql:3306/symfony?serverVersion=5.7
 ```
-### Ready up
-call [localhost](http://localhost/) in your browser
 
-### Thanks a lot to
-https://github.com/mlocati/docker-php-extension-installer \
-https://github.com/denji/nginx-tuning
+### Готово
+Откройте в браузере [localhost](http://localhost/)
