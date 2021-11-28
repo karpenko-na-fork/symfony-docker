@@ -14,6 +14,7 @@ For PHP8 use the following branch: https://github.com/coloso/symfony-docker/tree
     - [yarn](https://yarnpkg.com/lang/en/) and [node.js](https://nodejs.org/en/) (if you will use [Encore](https://symfony.com/doc/current/frontend/encore/installation.html) for managing JS and CSS)
  - [nginx](https://hub.docker.com/_/nginx) 1.21.+
  - [mysql](https://hub.docker.com/_/mysql/) 5.7.+
+ - [adminer](https://hub.docker.com/_/adminer/) 4.8.1
 
 ### Установка
 
@@ -55,5 +56,14 @@ rm -Rf /var/www/symfony/skeleton
 DATABASE_URL=mysql://root:root@mysql:3306/symfony?serverVersion=5.7
 ```
 
+Выполнение миграций
+```shell
+php bin/console doctrine:migrations:migrate
+```
+
 ### Готово
 Откройте в браузере [localhost](http://localhost/)
+
+Базу данный можно поспостреть по ссылке [localhost:8080](http://localhost:8080/)
+
+![Вход в Adminer](./help/adminer-login.png)

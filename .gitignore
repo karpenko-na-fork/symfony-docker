@@ -6,7 +6,6 @@ symfony/.env
 symfony/public/bundles/
 symfony/var/
 symfony/vendor/
-symfony/
 ###< symfony/framework-bundle ###
 
 .env
